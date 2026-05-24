@@ -220,14 +220,23 @@
       <!-- Lower Display: Conversion Result -->
       <div class="flex justify-between items-end w-full mt-4">
         
-        <!-- Copy Button (tactile touch) -->
-        <button onclick="copyResult()" id="copyBtn" class="neumorphic-btn p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] active:scale-90 transition-all flex items-center justify-center gap-1.5">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-          <span id="copyText" class="text-[10px] font-bold uppercase tracking-wider">Copy</span>
-        </button>
+        <!-- Action Row: Copy & Details -->
+        <div class="flex items-center gap-2">
+          <!-- Copy Button (tactile touch) -->
+          <button onclick="copyResult()" id="copyBtn" class="neumorphic-btn p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] active:scale-90 transition-all flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            <span id="copyText" class="text-[10px] font-bold uppercase tracking-wider">Copy</span>
+          </button>
+
+          <!-- Toggle Breakdown Button (tactile touch) -->
+          <button onclick="toggleBreakdown()" id="breakdownToggleBtn" class="hidden neumorphic-btn p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-main)] active:scale-90 transition-all flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            <span id="breakdownToggleText" class="text-[10px] font-bold uppercase tracking-wider">Details</span>
+          </button>
+        </div>
 
         <!-- Dynamic Output -->
-        <div class="flex items-baseline justify-end overflow-hidden max-w-[70%]">
+        <div class="flex items-baseline justify-end overflow-hidden max-w-[50%] sm:max-w-[55%]">
           <h2 id="resultText" class="text-4xl font-bold tracking-tight text-[var(--text-main)] truncate">0</h2>
           <span id="outputUnit" class="text-base font-semibold text-[var(--text-muted)] ml-1 mr-1">DH</span>
         </div>
@@ -247,6 +256,45 @@
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
         <span id="saveBtnText" class="truncate">Save</span>
       </button>
+    </div>
+
+    <!-- Banknote Breakdown Card (hidden by default, animated) -->
+    <div id="banknoteCard" class="hidden neumorphic-screen rounded-[24px] p-4 flex flex-col gap-2.5 transition-all duration-300 animate-slide-down">
+      <div class="flex justify-between items-center px-1">
+        <span id="banknoteTitleText" class="text-[10px] uppercase font-bold tracking-widest text-[var(--text-muted)]">Banknote Breakdown</span>
+        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      </div>
+
+      <!-- Denomination Equivalents -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="neumorphic-panel rounded-xl p-2 flex flex-col items-center justify-center">
+          <span class="text-[9px] uppercase tracking-wider text-[var(--text-muted)] font-bold mb-1">200 DH</span>
+          <div class="flex items-baseline gap-0.5">
+            <span id="noteCount200" class="text-base font-bold text-[var(--text-main)]">0</span>
+            <span class="text-[8px] text-[var(--text-muted)] note-label">notes</span>
+          </div>
+        </div>
+        <div class="neumorphic-panel rounded-xl p-2 flex flex-col items-center justify-center">
+          <span class="text-[9px] uppercase tracking-wider text-[var(--text-muted)] font-bold mb-1">100 DH</span>
+          <div class="flex items-baseline gap-0.5">
+            <span id="noteCount100" class="text-base font-bold text-[var(--text-main)]">0</span>
+            <span class="text-[8px] text-[var(--text-muted)] note-label">notes</span>
+          </div>
+        </div>
+        <div class="neumorphic-panel rounded-xl p-2 flex flex-col items-center justify-center">
+          <span class="text-[9px] uppercase tracking-wider text-[var(--text-muted)] font-bold mb-1">50 DH</span>
+          <div class="flex items-baseline gap-0.5">
+            <span id="noteCount50" class="text-base font-bold text-[var(--text-main)]">0</span>
+            <span class="text-[8px] text-[var(--text-muted)] note-label">notes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Greedy cash combination breakdown -->
+      <div class="neumorphic-panel rounded-xl p-2 flex flex-col items-center justify-center gap-0.5">
+        <span id="cashMixLabelText" class="text-[9px] uppercase tracking-wider text-[var(--text-muted)] font-bold">Standard Cash Mix</span>
+        <p id="cashMixFormula" class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 text-center tracking-wide font-sans"></p>
+      </div>
     </div>
 
     <!-- Tactile Numpad Grid -->
@@ -299,7 +347,12 @@
         unitRial: "Alf Ryal",
         unitDH: "DH",
         historyTitle: "Historique",
-        clearBtn: "Effacer"
+        clearBtn: "Effacer",
+        banknoteTitle: "Répartition des Billets",
+        cashMixLabel: "Mélange de Billets",
+        noteWord: "billet(s)",
+        details: "Détails",
+        hideDetails: "Fermer"
       },
       ar: {
         title: "محول العملة",
@@ -314,7 +367,12 @@
         unitRial: "ألف ريال",
         unitDH: "درهم",
         historyTitle: "السجل",
-        clearBtn: "مسح"
+        clearBtn: "مسح",
+        banknoteTitle: "تفصيل الأوراق النقدية",
+        cashMixLabel: "مزيج الأوراق النقدية",
+        noteWord: "ورقة",
+        details: "تفاصيل",
+        hideDetails: "إخفاء"
       }
     };
 
@@ -322,6 +380,7 @@
     let currentLang = 'fr';
     let inputValue = '';
     let sessionHistory = [];
+    let isBreakdownOpen = false;
 
     const displayInputEl = document.getElementById('displayInput');
     const resultEl = document.getElementById('resultText');
@@ -375,6 +434,11 @@
       document.getElementById('swapBtnText').innerText = t.swap;
       document.getElementById('historyTitleText').innerText = t.historyTitle;
       document.getElementById('clearBtnText').innerText = t.clearBtn;
+
+      // Translate banknote labels
+      document.getElementById('banknoteTitleText').innerText = t.banknoteTitle;
+      document.getElementById('cashMixLabelText').innerText = t.cashMixLabel;
+      document.querySelectorAll('.note-label').forEach((el) => el.innerText = t.noteWord);
       
       convert();
     }
@@ -383,6 +447,12 @@
       triggerHaptic();
       currentLang = currentLang === 'fr' ? 'ar' : 'fr';
       updateUI();
+    }
+
+    function toggleBreakdown() {
+      triggerHaptic();
+      isBreakdownOpen = !isBreakdownOpen;
+      convert();
     }
 
     function swapConversion() {
@@ -441,10 +511,15 @@
     function convert() {
       const num = parseFloat(inputValue);
       const t = translations[currentLang];
+      const card = document.getElementById('banknoteCard');
       
       if (isNaN(num) || inputValue === '') {
         resultEl.innerText = '0';
         adjustFontSize();
+        if (card) card.classList.add('hidden');
+        const toggleBtn = document.getElementById('breakdownToggleBtn');
+        if (toggleBtn) toggleBtn.classList.add('hidden');
+        isBreakdownOpen = false;
         return;
       }
 
@@ -454,6 +529,58 @@
       // Beautifully format using local settings (always Western numerals)
       resultEl.innerText = res.toLocaleString('fr-FR');
       adjustFontSize();
+
+      // Calculate Banknote Breakdown (50 DH or more)
+      const dhAmount = isRialToDh ? res : num;
+      const toggleBtn = document.getElementById('breakdownToggleBtn');
+
+      if (card) {
+        if (dhAmount >= 50) {
+          // 1. Single note equivalents (entirely in one type of note)
+          const eq200 = Math.floor(dhAmount / 200);
+          const eq100 = Math.floor(dhAmount / 100);
+          const eq50 = Math.floor(dhAmount / 50);
+
+          document.getElementById('noteCount200').innerText = eq200.toLocaleString('fr-FR');
+          document.getElementById('noteCount100').innerText = eq100.toLocaleString('fr-FR');
+          document.getElementById('noteCount50').innerText = eq50.toLocaleString('fr-FR');
+
+          // 2. Greedy Cash Mix combination
+          let rem = dhAmount;
+          const mix200 = Math.floor(rem / 200);
+          rem %= 200;
+          const mix100 = Math.floor(rem / 100);
+          rem %= 100;
+          const mix50 = Math.floor(rem / 50);
+          rem %= 50;
+
+          const parts = [];
+          if (mix200 > 0) parts.push(`${mix200} × 200 DH`);
+          if (mix100 > 0) parts.push(`${mix100} × 100 DH`);
+          if (mix50 > 0) parts.push(`${mix50} × 50 DH`);
+          if (rem > 0) parts.push(`${rem % 1 === 0 ? rem : parseFloat(rem.toFixed(2))} DH`); // Any remaining change
+
+          document.getElementById('cashMixFormula').innerText = parts.join(' + ') || `0 ${translations[currentLang].unitDH}`;
+          
+          // Show toggle details button
+          if (toggleBtn) {
+            toggleBtn.classList.remove('hidden');
+            toggleBtn.querySelector('#breakdownToggleText').innerText = isBreakdownOpen ? t.hideDetails : t.details;
+          }
+
+          // Show/hide banknote card based on toggle state
+          if (isBreakdownOpen) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        } else {
+          // Hide both toggle button and breakdown card for small amounts
+          if (toggleBtn) toggleBtn.classList.add('hidden');
+          card.classList.add('hidden');
+          isBreakdownOpen = false;
+        }
+      }
     }
 
     function copyResult() {
