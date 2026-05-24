@@ -151,6 +151,27 @@
       background: var(--shadow-dark);
       border-radius: 9999px;
     }
+
+    /* Mobile Responsive Fullscreen adjustments (removes margins/shadows on phone screens) */
+    @media (max-width: 639px) {
+      body {
+        padding: 0 !important;
+        overflow-y: auto !important;
+        background-color: var(--bg-color) !important;
+      }
+      .neumorphic-panel {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        width: 100vw !important;
+        min-height: 100vh !important;
+        min-height: -webkit-fill-available !important;
+        padding: 1.25rem !important; /* 20px padding on mobile */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        gap: 1rem !important;
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 overflow-x-hidden font-sans">
