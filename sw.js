@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rial-dh-converter-v1';
+const CACHE_NAME = 'rial-dh-converter-v2';
 const ASSETS = [
   './',
   './index.html',
